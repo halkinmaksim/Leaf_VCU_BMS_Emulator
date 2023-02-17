@@ -24,7 +24,8 @@
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
-
+#include "bms_if.h"
+#include "vcu_if.h"
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -90,7 +91,8 @@ int main(void)
   MX_CAN2_Init();
   MX_TIM2_Init();
   /* USER CODE BEGIN 2 */
-
+  InitCAN_if();
+    HAL_TIM_Base_Start_IT(&htim2);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -150,6 +152,11 @@ void SystemClock_Config(void)
 }
 
 /* USER CODE BEGIN 4 */
+
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
+    SendVCMDataProcess();
+    SendBMSDataProcess();
+}
 
 /* USER CODE END 4 */
 
